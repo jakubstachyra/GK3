@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +29,7 @@ namespace GK3
         int curveControlPointsCount = 4;
         bool isMoving = false;
         static CIEXYZ[] waveLengths = new CIEXYZ[781];
-        readonly CIEXYZ bezierCurvePoint;
+        CIEXYZ bezierCurvePoint;
         public Form1()
         {
             InitializeComponent();        
@@ -79,13 +80,14 @@ namespace GK3
             drawer.DrawPoints(sender, e, curve.controlPoints);
             drawer.DrawBezier(sender, e, curve.bezierCurve);
             drawer.DrawDottedLines(sender, e, curve.controlPoints);
+            LightPoint();
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMoving)
             {
-                Utils.MovePoint(ref curve.controlPoints, movingPointIndex, e);
+                Utils.MovePoint(ref curve.controlPoints, movingPointIndex,margin,pictureBox1, e);
                 curve.UpdateCurve();
             }
                 pictureBox1.Invalidate();
@@ -120,7 +122,7 @@ namespace GK3
                 e.Graphics.DrawImage(backgroundBitmap, new Point(margin, pictureBox2.Height - backgroundBitmap.Height - margin));
             }
 
-            if (true)
+            if (dotscheckBox.Checked)
             {
                 for (int i = 380; i <= 700; ++i)
                 {
@@ -146,11 +148,57 @@ namespace GK3
                 Point p = new Point((int)(x * (Math.Min(pictureBox2.Width, pictureBox2.Height) - margin)) + margin,
                     pictureBox2.Height - (int)(y * (Math.Min(pictureBox2.Width, pictureBox2.Height) - margin)) - margin);
 
-                e.Graphics.FillEllipse(Brushes.DarkRed, new Rectangle(p.X - 5, p.Y - 5, 10, 10));
+                e.Graphics.FillEllipse(Brushes.DarkMagenta, new Rectangle(p.X - 5, p.Y - 5, 10, 10));
                 e.Graphics.DrawString(x.ToString("f") + ", " + y.ToString("f"), new Font("Arial", 10), Brushes.Black, p);
             }
         }
+        public  void LightPoint()
+        {
+            bezierCurvePoint.X = bezierCurvePoint.Y = bezierCurvePoint.Z = 0;
+            PointF pointA = curve.controlPoints[0];
+            PointF pointB;
+            for (double i = 0; i <= 1; i += 0.01)
+            {
+                pointB = new Point(0, 0);
+                for (int j = 0; j <= curveControlPointsCount - 1; j++)
+                {
+                    int r = 1;
+                    int n = curveControlPointsCount - 1;
+                    if (j > n) r = 0;
+                    else for (int l = 1; l <= j; ++l) r = (r * n--) / l;
 
+                    pointB.X += (int)(curve.controlPoints[j].X * r * Math.Pow(1 - i, curveControlPointsCount - 1 - j) * Math.Pow(i, j));
+                    pointB.Y += (int)(curve.controlPoints[j].Y * r * Math.Pow(1 - i, curveControlPointsCount - 1 - j) * Math.Pow(i, j));
+                }
+
+                double x1 = (double)(pointA.X - margin) / (pictureBox2.Width - margin) * 499 + 330;
+                if(x1 >780)
+                {
+                    x1 = 780;
+                }
+                double y1 = (double)(pointA.Y - margin) / (pictureBox2.Height - margin) * 1.8;
+                double x2 = (double)(pointB.X - margin) / (pictureBox2.Width - margin) * 499 + 330;
+                if (x2 > 780)
+                {
+                    x2 = 780;
+                }
+                double y2 = (double)(pointB.Y - margin) / (pictureBox2.Height - margin) * 1.8;
+                CIEXYZ v1 = waveLengths[(int)x1];
+                CIEXYZ v2 = waveLengths[(int)x2];
+                int h = (int)( Math.Abs(pointB.X - pointA.X));
+                if (v1 != null && v2 != null)
+                {
+                    bezierCurvePoint.X += (v1.X * y1 + v2.X * y2) * h / 2;
+                    bezierCurvePoint.Y += (v1.Y * y1 + v2.Y * y2) * h / 2;
+                    bezierCurvePoint.Z += (v1.Z * y1 + v2.Z * y2) * h / 2;
+                }
+                pointA = pointB;
+            }
+            bezierCurvePoint.X *= k;
+            bezierCurvePoint.Y *= k;
+            bezierCurvePoint.Z *= k;
+            pictureBox2.Invalidate();
+        }
         private void backgroundCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             pictureBox2.Invalidate();
@@ -159,6 +207,11 @@ namespace GK3
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             pictureBox2.Invalidate();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -35,6 +37,7 @@ namespace GK3
                 k += waveLengths[wl].Y;
             }
             k = 1 / k;
-        } 
+        }
+        
     }
 }

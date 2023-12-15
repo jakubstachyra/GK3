@@ -32,7 +32,8 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.backgroundCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.dotscheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -56,7 +57,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.White;
-            this.pictureBox2.Location = new System.Drawing.Point(512, -1);
+            this.pictureBox2.Location = new System.Drawing.Point(513, 4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(514, 459);
             this.pictureBox2.TabIndex = 1;
@@ -65,7 +66,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(480, -1);
+            this.numericUpDown1.Location = new System.Drawing.Point(467, 23);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
             this.numericUpDown1.TabIndex = 3;
@@ -90,29 +91,43 @@
             this.backgroundCheckBox.UseVisualStyleBackColor = false;
             this.backgroundCheckBox.CheckedChanged += new System.EventHandler(this.backgroundCheckBox_CheckedChanged);
             // 
-            // checkBox1
+            // dotscheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(925, 35);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 17);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "DotscheckBox";
-            this.checkBox1.UseVisualStyleBackColor = false;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.dotscheckBox.AutoSize = true;
+            this.dotscheckBox.BackColor = System.Drawing.Color.White;
+            this.dotscheckBox.Checked = true;
+            this.dotscheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.dotscheckBox.Location = new System.Drawing.Point(925, 35);
+            this.dotscheckBox.Name = "dotscheckBox";
+            this.dotscheckBox.Size = new System.Drawing.Size(48, 17);
+            this.dotscheckBox.TabIndex = 5;
+            this.dotscheckBox.Text = "Dots";
+            this.dotscheckBox.UseVisualStyleBackColor = false;
+            this.dotscheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(467, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Points";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1017, 456);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dotscheckBox);
             this.Controls.Add(this.backgroundCheckBox);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = " ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -129,7 +144,8 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.CheckBox backgroundCheckBox;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox dotscheckBox;
+        private System.Windows.Forms.Label label1;
     }
 }
 

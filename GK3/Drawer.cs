@@ -49,17 +49,24 @@ namespace GK3
 
             // Rysowanie osi
 
-            for (int x = 380; x <= 780; x += 50)
+            for (int x = 380; x <= 780; x += 30)
             {
-                int xPos = 30 + (x - 330); // Skalowanie X
-                g.DrawLine(Pens.Black, xPos, 390, xPos, 410); // Małe linie na osi X
-                g.DrawString(x.ToString(), new Font("Arial", 8), Brushes.Black, xPos - 10, 410);
+                int xPos = 50 + (x - 320); // Skalowanie X
+                g.DrawLine(Pens.Black, xPos - 25, 390, xPos - 25, 410); // Małe linie na osi X
+                if(x == 380)
+                {
+                    g.DrawString(x.ToString(), new Font("Arial", 8), Brushes.Black, xPos - 35, 410);
+                }
+                else
+                {
+                    g.DrawString((x + 10).ToString(), new Font("Arial", 8), Brushes.Black, xPos - 35, 410);
+                }
             }
 
             // Rysowanie osi Y
             for (float y = 0; y <= 2; y += 0.2f)
             {
-                int yPos = 400 - (int)(y * 200); // Skalowanie Y
+                int yPos = 400 - (int)(y * 180); // Skalowanie Y
                 g.DrawLine(Pens.Black, 40, yPos, 60, yPos); // Małe linie na osi Y
                 g.DrawString(y.ToString("0.0"), new Font("Arial", 8), Brushes.Black,15, yPos - 10);
             }

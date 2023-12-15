@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,14 +9,10 @@ namespace GK3
 {
     public class Utils
     {
-        public static void MovePoint(ref List<PointF> points, int index, MouseEventArgs e)
-        {
-            PointF point = points[index];
-            if(point != null)
-            {
-                    points[index] = new PointF(e.Location.X, e.Location.Y);
-
-            }
+        public static void MovePoint(ref List<PointF> points, int index,int margin,PictureBox bezierCurvePictureBox, MouseEventArgs e)
+        { 
+                double x = (double)(e.Location.X - margin) / (bezierCurvePictureBox.Width - margin) * 500 + 330;
+                if (x >= 380 && x <= 780) points[index] = e.Location;
         }
         public static bool  Compare(PointF p1, PointF p2, int eps)
         {
